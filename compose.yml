@@ -1,0 +1,26 @@
+version: '1'
+
+BSDPy: 
+  image: macadmins/bsdpy
+  environment: 
+    DOCKER_BSDPY_IP: 192.168.254.22
+  ports:
+    - "69:69/udp"
+    - "67:67/udp"
+    - "80:80"
+  volumes:
+    - /srv/bsdpy/nbi:/nbi:rw
+Samba:
+  image: appcontainers/samba
+  environment: 
+    - SAMBA_USER: nbi
+    - SAMBA_PASS: nbi
+  ports:
+    - "138:138/udp"
+    - "139:139/udp"
+    - "445:445/udp"
+    - "445:445"
+  volumes_from:
+    - BSDPy
+
+
